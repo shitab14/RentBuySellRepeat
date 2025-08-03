@@ -6,11 +6,13 @@ shitabmir@gmail.com
  **/
 
 import app.smir.rentbuysellrepeat.BuildConfig
+import app.smir.rentbuysellrepeat.data.database.AppDatabase
 import app.smir.rentbuysellrepeat.network.api.AuthApi
 import app.smir.rentbuysellrepeat.network.api.ProductApi
 import app.smir.rentbuysellrepeat.network.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -44,6 +46,9 @@ object AppModule {
     }
 
     private val databaseModule = module {
+        single { AppDatabase.getDatabase(androidContext()) }
+        single { get<AppDatabase>().authDao() }
+//        single { get<AppDatabase>().productDao() } // TODO: SHITAB will add product DAO methods here
     }
 
     private val dataSourceModule = module {
