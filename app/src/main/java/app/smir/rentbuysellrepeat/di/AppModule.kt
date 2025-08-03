@@ -7,9 +7,18 @@ shitabmir@gmail.com
 
 import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.data.database.AppDatabase
+import app.smir.rentbuysellrepeat.data.repository.AuthRepositoryImpl
+import app.smir.rentbuysellrepeat.data.repository.ProductRepositoryImpl
+import app.smir.rentbuysellrepeat.data.source.local.AuthLocalDataSource
+import app.smir.rentbuysellrepeat.data.source.local.ProductLocalDataSource
+import app.smir.rentbuysellrepeat.data.source.remote.AuthRemoteDataSource
+import app.smir.rentbuysellrepeat.data.source.remote.ProductRemoteDataSource
+import app.smir.rentbuysellrepeat.domain.repository.AuthRepository
+import app.smir.rentbuysellrepeat.domain.repository.ProductRepository
 import app.smir.rentbuysellrepeat.network.api.AuthApi
 import app.smir.rentbuysellrepeat.network.api.ProductApi
 import app.smir.rentbuysellrepeat.network.interceptor.AuthInterceptor
+import app.smir.rentbuysellrepeat.util.helper.DataStoreManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -52,15 +61,22 @@ object AppModule {
     }
 
     private val dataSourceModule = module {
+        single { AuthRemoteDataSource(get()) }
+        single { AuthLocalDataSource(get(), get()) }
+        single { ProductRemoteDataSource(get()) }
+        single { ProductLocalDataSource(get()) }
     }
 
     private val repositoryModule = module {
+        single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
+        single<ProductRepository> { ProductRepositoryImpl(get(), get()) }
     }
 
     private val useCaseModule = module {
     }
 
     private val utilityModule = module {
+        single { DataStoreManager(androidContext()) }
     }
 
     val all = listOf(
