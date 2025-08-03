@@ -26,6 +26,14 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import app.smir.rentbuysellrepeat.domain.usecase.auth.LoginUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.RegisterUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.GetProductsUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.GetProductDetailsUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.CreateProductUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.UpdateProductUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.DeleteProductUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.GetCategoriesUseCase
 
 object AppModule {
     private val networkModule = module {
@@ -73,6 +81,14 @@ object AppModule {
     }
 
     private val useCaseModule = module {
+        single { LoginUseCase(get()) }
+        single { RegisterUseCase(get()) }
+        single { GetProductsUseCase(get()) }
+        single { GetProductDetailsUseCase(get()) }
+        single { CreateProductUseCase(get()) }
+        single { UpdateProductUseCase(get()) }
+        single { DeleteProductUseCase(get()) }
+        single { GetCategoriesUseCase(get()) }
     }
 
     private val utilityModule = module {
