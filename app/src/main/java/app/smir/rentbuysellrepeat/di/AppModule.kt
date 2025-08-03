@@ -34,6 +34,7 @@ import app.smir.rentbuysellrepeat.domain.usecase.product.CreateProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.UpdateProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.DeleteProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetCategoriesUseCase
+import app.smir.rentbuysellrepeat.presentation.feature.auth.AuthViewModel
 
 object AppModule {
     private val networkModule = module {
@@ -95,12 +96,18 @@ object AppModule {
         single { DataStoreManager(androidContext()) }
     }
 
+    private val viewModelModule = module {
+        single { AuthViewModel(get(), get()) }
+    }
+
+
     val all = listOf(
         networkModule,
         databaseModule,
         dataSourceModule,
         repositoryModule,
         useCaseModule,
-        utilityModule
+        utilityModule,
+        viewModelModule
     )
 }

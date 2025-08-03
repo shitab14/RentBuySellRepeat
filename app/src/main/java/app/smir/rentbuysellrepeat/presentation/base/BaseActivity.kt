@@ -28,14 +28,14 @@ abstract class BaseActivity<VB : ViewBinding>(
     abstract fun setupViews()
     abstract fun setupObservers()
 
-    fun showLoading() {
+    open fun showLoading() {
         if (loadingDialog == null) {
             loadingDialog = LoadingDialog(this)
         }
         loadingDialog?.show()
     }
 
-    fun hideLoading() {
+    open fun hideLoading() {
         loadingDialog?.dismiss()
         loadingDialog = null
     }

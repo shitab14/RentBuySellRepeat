@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RentBuySellRepeat</string>
     <string name="don_t_have_account_sign_up">Don\'t have account? Sign Up</string>
     <string name="sign_in">SIGN IN</string>
     <string name="email">Email</string>
