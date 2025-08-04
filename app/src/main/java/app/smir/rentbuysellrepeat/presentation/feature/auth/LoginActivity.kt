@@ -17,6 +17,7 @@ import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.util.validation.EmailValidator
 import app.smir.rentbuysellrepeat.util.validation.PasswordValidator
 import androidx.core.graphics.toColorInt
+import app.smir.rentbuysellrepeat.presentation.feature.product.MyProductsActivity
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(
     ActivityLoginBinding::inflate
@@ -62,7 +63,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
         }
 
         binding.tvSignUp.setOnClickListener {
-            //startActivity(Intent(this, RegisterActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
@@ -90,7 +91,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     }
 
     private fun navigateToMyProducts() {
-        //startActivity(Intent(this, MyProductsActivity::class.java))
+        startActivity(Intent(this, MyProductsActivity::class.java))
         finishAffinity()
     }
 

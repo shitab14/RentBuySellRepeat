@@ -35,6 +35,9 @@ import app.smir.rentbuysellrepeat.domain.usecase.product.UpdateProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.DeleteProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetCategoriesUseCase
 import app.smir.rentbuysellrepeat.presentation.feature.auth.AuthViewModel
+import app.smir.rentbuysellrepeat.presentation.feature.product.ProductViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 
 object AppModule {
     private val networkModule = module {
@@ -66,7 +69,8 @@ object AppModule {
     private val databaseModule = module {
         single { AppDatabase.getDatabase(androidContext()) }
         single { get<AppDatabase>().authDao() }
-//        single { get<AppDatabase>().productDao() } // TODO: SHITAB will add product DAO methods here
+        single { get<AppDatabase>().productDao() }
+    // TODO: SHITAB will add product DAO methods here
     }
 
     private val dataSourceModule = module {
@@ -97,7 +101,24 @@ object AppModule {
     }
 
     private val viewModelModule = module {
-        single { AuthViewModel(get(), get()) }
+//        single { AuthViewModel(get(), get()) }
+//        viewModelOf(::AuthViewModel)
+        viewModel {
+            AuthViewModel(
+                get(),
+                get()
+            )
+        }
+        viewModel {
+            ProductViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        ) }
+
     }
 
 

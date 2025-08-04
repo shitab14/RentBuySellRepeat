@@ -123,6 +123,10 @@ dependencies {
     // Javax Inject
     implementation ("javax.inject:javax.inject:1")
 
+    // SDP Library
+    implementation ("com.intuit.sdp:sdp-android:1.1.1")
+    implementation ("com.intuit.ssp:ssp-android:1.1.1")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:5.4.0")

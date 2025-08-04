@@ -5,4 +5,19 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">LOGIN</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign In</string>
+    <string name="register">REGISTER</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="address">Address</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="delete">delete</string>
+    <string name="product_image">Product Image</string>
+    <string name="add_product">Add Product</string>
+    <string name="log_out">Log Out</string>
+    <string name="all_products">All Products</string>
+    <string name="my_products">My Products</string>
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="close_drawer">Close navigation drawer</string>
+    <string name="my_products_all_caps">MY PRODUCTS</string>
 </resources>
