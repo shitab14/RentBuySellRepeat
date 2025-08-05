@@ -22,7 +22,7 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
 
     override suspend fun login(request: LoginRequest): ResultWrapper<Response<LoginResponse>> {
-        return if(BuildConfig.DEBUG) {
+        return if(BuildConfig.FLAVOR.equals("dev")) {
             remoteDataSource.loginMock(request)
         } else {
             remoteDataSource.login(request)
@@ -30,7 +30,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun register(request: RegisterRequest): ResultWrapper<Response<RegisterResponse>> {
-        return if(BuildConfig.DEBUG) {
+        return if(BuildConfig.FLAVOR.equals("dev")) {
             remoteDataSource.register(request)
         } else {
             remoteDataSource.register(request)

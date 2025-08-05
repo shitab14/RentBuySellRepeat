@@ -19,7 +19,7 @@ class ProductRemoteDataSource @Inject constructor(
     private val productApi: ProductApi
 ) {
     suspend fun getProducts(): ResultWrapper<Response<List<ProductResponse>>> {
-        return if (BuildConfig.DEBUG) {
+        return if (BuildConfig.FLAVOR.equals("dev")) {
             safeApiCall { productApi.getProductsMock() }
         } else{
             safeApiCall { productApi.getProducts() }

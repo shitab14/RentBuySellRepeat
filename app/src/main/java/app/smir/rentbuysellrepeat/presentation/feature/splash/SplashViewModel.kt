@@ -12,7 +12,7 @@ class SplashViewModel @Inject constructor(
     private val userLoggedInUseCase: UserLoggedInUseCase
 ): ViewModel() {
 
-    suspend fun isUserLoggedIn(): Boolean {
+    fun isUserLoggedIn(): Boolean {
         return userLoggedInUseCase.invoke()
     }
 

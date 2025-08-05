@@ -11,8 +11,11 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.lifecycleScope
+import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.presentation.feature.auth.LoginActivity
 import app.smir.rentbuysellrepeat.presentation.feature.product.MyProductsActivity
+import app.smir.rentbuysellrepeat.util.extension.showSnackBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,6 +39,9 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if(BuildConfig.FLAVOR.equals("dev")) {
+            binding.root.showSnackBar("This is Dev Flavor", Snackbar.LENGTH_LONG)
+        }
 
         Handler(Looper.getMainLooper()).postDelayed({
             lifecycleScope.launch {
@@ -44,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
         }, 2000)
     }
 
-    private suspend fun checkAuthStatus() {
+    private fun checkAuthStatus() {
         if (viewModel.isUserLoggedIn()) {
             startActivity(Intent(this, MyProductsActivity::class.java))
         }

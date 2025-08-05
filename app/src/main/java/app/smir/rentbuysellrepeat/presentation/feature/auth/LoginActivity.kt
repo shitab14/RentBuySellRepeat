@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import app.smir.rentbuysellrepeat.databinding.ActivityLoginBinding
@@ -27,6 +28,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
         loadingDialog = LoadingDialog(this)
         setupClickListeners()
         makeSignUpTextSpannableText()
+
+        mockDataPrepare()
+    }
+
+    private fun mockDataPrepare() {
+        if(BuildConfig.FLAVOR.equals("dev")) {
+            binding.etEmail.setText("shitabmir@gmail.com")
+            binding.etPassword.setText("123456")
+        }
     }
 
     override fun setupObservers() {

@@ -6,13 +6,16 @@ shitabmir@gmail.com
  **/
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.smir.rentbuysellrepeat.R
 import app.smir.rentbuysellrepeat.data.model.product.ProductResponse
 import app.smir.rentbuysellrepeat.databinding.ItemProductBinding
+import app.smir.rentbuysellrepeat.util.helper.TimeDateUtil
 import com.bumptech.glide.Glide
 
 class ProductAdapter(
@@ -41,8 +44,36 @@ class ProductAdapter(
         fun bind(product: ProductResponse) {
             binding.apply {
                 tvTitle.text = product.title
-                tvPrice.text = "$${product.purchase_price}"
-                tvRentPrice.text = "${product.rent_price}/${product.rent_option}"
+
+                var categoriesText = "Categories: "
+                if(product.categories.isNotEmpty()) {
+                    for (category in product.categories) {
+                        categoriesText = "$categoriesText$category, "
+                    }
+                    categoriesText = categoriesText.dropLast(2)
+                } else {
+                    categoriesText = ""
+                }
+                tvCategories.text = categoriesText
+
+                tvRentPrice.text = "Price: ${product.purchase_price} | Rent: ${product.rent_price}/${product.rent_option}"
+
+                tvDescription.maxLines = 2
+                tvDescription.text = "Description: ${product.description}"
+
+                checkDescriptionCharacterLimit(tvDescription, tvMoreDetails)
+
+                tvMoreDetails.setOnClickListener {
+                    tvDescription.maxLines = Int.MAX_VALUE
+                    tvMoreDetails.visibility = View.GONE
+                }
+
+                tvDescription.setOnClickListener {
+                    tvDescription.maxLines = 2
+                    checkDescriptionCharacterLimit(tvDescription, tvMoreDetails)
+                }
+
+                tvDatePosted.text = "Date Posted: ${TimeDateUtil.formatIsoDateWithSuffix(product.date_posted)}"
 
                 Glide.with(root.context)
                     .load(product.product_image)
@@ -52,6 +83,15 @@ class ProductAdapter(
                 btnDelete.setOnClickListener { onDeleteClick(product) }
                 root.setOnClickListener { onItemClick(product) }
             }
+        }
+
+        private fun checkDescriptionCharacterLimit(
+            tvDescription: TextView,
+            tvMoreDetails: TextView
+        ) {
+            if (tvDescription.text.length > 50) {
+                tvMoreDetails.visibility = View.VISIBLE
+            } else tvMoreDetails.visibility = View.GONE
         }
     }
 

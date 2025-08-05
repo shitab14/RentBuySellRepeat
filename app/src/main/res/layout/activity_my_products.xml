@@ -32,25 +32,34 @@
             android:layout_height="wrap_content"
             android:text="@string/my_products_all_caps"
             android:textAlignment="center"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/_26ssp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvProducts"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:background="@android:color/white"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/_72sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMyProducts"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_product" />
+            app:layout_constraintTop_toBottomOf="@id/tvMyProducts">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProducts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@android:color/white"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_72sdp"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_product" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <ProgressBar
             android:id="@+id/progressBar"

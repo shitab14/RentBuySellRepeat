@@ -13,6 +13,7 @@ import app.smir.rentbuysellrepeat.presentation.feature.product.adapter.ProductAd
 import app.smir.rentbuysellrepeat.util.extension.showSnackBar
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.R
+import app.smir.rentbuysellrepeat.data.model.product.ProductResponse
 
 class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
     ActivityMyProductsBinding::inflate
@@ -36,7 +37,9 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
                 is ResultWrapper.Loading -> showLoading()
                 is ResultWrapper.Success -> {
                     hideLoading()
-//                    productAdapter.submitList(result.data) // TODO: Shitab will ...
+
+                    val productList: List<ProductResponse>? = result.data.body()
+                    productAdapter.submitList(productList)
                 }
                 is ResultWrapper.Error -> {
                     hideLoading()
@@ -85,6 +88,10 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
     }
 
     private fun setupClickListeners() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadProducts()
+        }
+
         binding.fabAddProduct.setOnClickListener {
 //            startActivity(Intent(this, CreateProductActivity::class.java)) // TODO: SHITAB will ...
         }
@@ -129,6 +136,7 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
 
     override fun hideLoading() {
         binding.progressBar.visibility = View.GONE
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun navigateToLogin() {
