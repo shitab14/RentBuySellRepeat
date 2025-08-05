@@ -1,8 +1,6 @@
 package app.smir.rentbuysellrepeat.presentation.feature.product
 
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,12 +17,13 @@ import app.smir.rentbuysellrepeat.R
 class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
     ActivityMyProductsBinding::inflate
 ) {
-
     private val viewModel: ProductViewModel by viewModel()
     private lateinit var productAdapter: ProductAdapter
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun setupViews() {
+        viewModel.loadProducts()
+
         setupToolbar()
         setupRecyclerView()
         setupClickListeners()

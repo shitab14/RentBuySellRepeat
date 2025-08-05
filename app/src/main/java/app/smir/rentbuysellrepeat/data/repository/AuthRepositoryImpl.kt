@@ -4,6 +4,7 @@ package app.smir.rentbuysellrepeat.data.repository
 Created by Shitab Mir on 3/8/25.
 shitabmir@gmail.com
  **/
+import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.data.model.auth.LoginRequest
 import app.smir.rentbuysellrepeat.data.model.auth.LoginResponse
 import app.smir.rentbuysellrepeat.data.model.auth.RegisterRequest
@@ -21,15 +22,23 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
 
     override suspend fun login(request: LoginRequest): ResultWrapper<Response<LoginResponse>> {
-        return remoteDataSource.login(request)
+        return if(BuildConfig.DEBUG) {
+            remoteDataSource.loginMock(request)
+        } else {
+            remoteDataSource.login(request)
+        }
     }
 
     override suspend fun register(request: RegisterRequest): ResultWrapper<Response<RegisterResponse>> {
-        return remoteDataSource.register(request)
+        return if(BuildConfig.DEBUG) {
+            remoteDataSource.register(request)
+        } else {
+            remoteDataSource.register(request)
+        }
     }
 
     override suspend fun saveAuthData(response: LoginResponse) {
-        // TODO: SHITAB will add auth data saving logic here
+        localDataSource.saveAuthData(response)
     }
 
     override suspend fun clearAuthData() {
@@ -37,7 +46,6 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun isUserLoggedIn(): Boolean {
-        // TODO: SHITAB will add auth data saving logic here
-        return false
+        return localDataSource.isUserLoggedIn()
     }
 }

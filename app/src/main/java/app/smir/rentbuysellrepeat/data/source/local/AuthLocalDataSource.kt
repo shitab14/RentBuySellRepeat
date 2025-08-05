@@ -15,10 +15,8 @@ class AuthLocalDataSource @Inject constructor(
  private val dataStoreManager: DataStoreManager
 ) {
  suspend fun saveAuthData(response: LoginResponse) {
-  // TODO: SHITAB will implement saving auth data to both Room and DataStore
   dataStoreManager.saveAccessToken(response.fcm_token ?: "")
   dataStoreManager.saveUserEmail(response.email)
-  // Save other necessary data
  }
 
  suspend fun clearAuthData() {

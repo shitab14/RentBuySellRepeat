@@ -1,8 +1,6 @@
 package app.smir.rentbuysellrepeat.presentation.feature.auth
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -16,7 +14,6 @@ import app.smir.rentbuysellrepeat.util.helper.LoadingDialog
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.util.validation.EmailValidator
 import app.smir.rentbuysellrepeat.util.validation.PasswordValidator
-import androidx.core.graphics.toColorInt
 import app.smir.rentbuysellrepeat.presentation.feature.product.MyProductsActivity
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(
@@ -37,6 +34,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
             when (result) {
                 is ResultWrapper.Loading -> showLoading()
                 is ResultWrapper.Success -> {
+
+                    result.data.body()?.let { viewModel.saveAuthData(it) }
+
                     hideLoading()
                     navigateToMyProducts()
                 }
@@ -100,7 +100,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
 
         val spannableString = SpannableString(fullText)
 
-        val startIndex = 19
+        val startIndex = 20
         val endIndex = startIndex + "Sign up".length
 
         val customColor = getColor(R.color.purple_500)//"#673AB7".toColorInt()

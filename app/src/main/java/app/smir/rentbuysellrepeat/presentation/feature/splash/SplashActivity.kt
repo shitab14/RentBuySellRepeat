@@ -10,13 +10,19 @@ import app.smir.rentbuysellrepeat.util.helper.DataStoreManager
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.lifecycleScope
 import app.smir.rentbuysellrepeat.presentation.feature.auth.LoginActivity
+import app.smir.rentbuysellrepeat.presentation.feature.product.MyProductsActivity
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
-    private val dataStoreManager: DataStoreManager by inject()
+//    private val dataStoreManager: DataStoreManager by inject()
+
+    private val viewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +36,20 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         Handler(Looper.getMainLooper()).postDelayed({
-            checkAuthStatus()
+            lifecycleScope.launch {
+                checkAuthStatus()
+            }
         }, 2000)
     }
 
-    private fun checkAuthStatus() {
-        // TODO: SHITAB will add auth check logic here
-        startActivity(Intent(this, LoginActivity::class.java))
+    private suspend fun checkAuthStatus() {
+        if (viewModel.isUserLoggedIn()) {
+            startActivity(Intent(this, MyProductsActivity::class.java))
+        }
+        else startActivity(Intent(this, LoginActivity::class.java))
+
         finish()
     }
 

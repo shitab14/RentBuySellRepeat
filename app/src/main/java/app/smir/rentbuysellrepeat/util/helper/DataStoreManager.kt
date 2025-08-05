@@ -8,7 +8,9 @@ import android.content.Context
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 private val Context.dataStore by preferencesDataStore(name = "app_preferences")
 
@@ -80,7 +82,7 @@ class DataStoreManager(context: Context) {
  }
 
  fun getAccessToken(): String? {
-  // TODO: SHITAB will add synchronous access token retrieval if needed
-  return null
+  return runBlocking { accessToken.firstOrNull() }
  }
+
 }

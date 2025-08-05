@@ -1,7 +1,6 @@
 package app.smir.rentbuysellrepeat.presentation.feature.auth
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import app.smir.rentbuysellrepeat.data.model.auth.RegisterRequest
 import app.smir.rentbuysellrepeat.databinding.ActivityRegisterBinding
@@ -27,6 +26,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(
             when (result) {
                 is ResultWrapper.Loading -> showLoading()
                 is ResultWrapper.Success -> {
+                    result.data.body()?.let { viewModel.saveAuthDataOnRegistration(it) }
+
                     hideLoading()
                     navigateToMyProducts()
                 }
@@ -49,8 +50,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(
                 val request = createRegisterRequest()
                 viewModel.register(request)
             }
-            // TODO: Shitab will revert
-            navigateToMyProducts()
+
         }
 
         binding.tvSignIn.setOnClickListener {

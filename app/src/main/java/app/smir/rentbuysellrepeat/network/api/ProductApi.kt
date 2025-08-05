@@ -14,6 +14,9 @@ interface ProductApi {
     @GET("api/products/")
     suspend fun getProducts(): Response<List<ProductResponse>>
 
+    @GET("api/products/products.json")
+    suspend fun getProductsMock(): Response<List<ProductResponse>>
+
     @GET("api/products/{id}")
     suspend fun getProductDetails(@Path("id") id: Int): Response<ProductResponse>
 

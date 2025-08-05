@@ -28,6 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import app.smir.rentbuysellrepeat.domain.usecase.auth.LoginUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.RegisterUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataFromRegisterUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.UserLoggedInUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetProductsUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetProductDetailsUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.CreateProductUseCase
@@ -36,8 +39,8 @@ import app.smir.rentbuysellrepeat.domain.usecase.product.DeleteProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetCategoriesUseCase
 import app.smir.rentbuysellrepeat.presentation.feature.auth.AuthViewModel
 import app.smir.rentbuysellrepeat.presentation.feature.product.ProductViewModel
+import app.smir.rentbuysellrepeat.presentation.feature.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 
 object AppModule {
     private val networkModule = module {
@@ -86,14 +89,17 @@ object AppModule {
     }
 
     private val useCaseModule = module {
-        single { LoginUseCase(get()) }
-        single { RegisterUseCase(get()) }
-        single { GetProductsUseCase(get()) }
-        single { GetProductDetailsUseCase(get()) }
-        single { CreateProductUseCase(get()) }
-        single { UpdateProductUseCase(get()) }
-        single { DeleteProductUseCase(get()) }
-        single { GetCategoriesUseCase(get()) }
+        single { LoginUseCase(repository = get()) }
+        single { SaveUserAuthDataUseCase(repository = get()) }
+        single { RegisterUseCase(repository = get()) }
+        single { SaveUserAuthDataFromRegisterUseCase(repository = get()) }
+        single { GetProductsUseCase(repository = get()) }
+        single { GetProductDetailsUseCase(repository = get()) }
+        single { UserLoggedInUseCase(repository = get()) }
+        single { CreateProductUseCase(repository = get()) }
+        single { UpdateProductUseCase(repository = get()) }
+        single { DeleteProductUseCase(repository = get()) }
+        single { GetCategoriesUseCase(repository = get()) }
     }
 
     private val utilityModule = module {
@@ -104,9 +110,16 @@ object AppModule {
 //        single { AuthViewModel(get(), get()) }
 //        viewModelOf(::AuthViewModel)
         viewModel {
+            SplashViewModel(
+                userLoggedInUseCase = get()
+            )
+        }
+        viewModel {
             AuthViewModel(
-                get(),
-                get()
+                loginUseCase = get(),
+                registerUseCase = get(),
+                saveUserAuthDataUseCase = get(),
+                saveUserAuthDataForRegisterUseCase = get(),
             )
         }
         viewModel {

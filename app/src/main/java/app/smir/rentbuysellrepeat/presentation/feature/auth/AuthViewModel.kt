@@ -14,6 +14,8 @@ import app.smir.rentbuysellrepeat.data.model.auth.RegisterRequest
 import app.smir.rentbuysellrepeat.data.model.auth.RegisterResponse
 import app.smir.rentbuysellrepeat.domain.usecase.auth.LoginUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.RegisterUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataFromRegisterUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataUseCase
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -21,7 +23,9 @@ import javax.inject.Inject
 
 class AuthViewModel @Inject constructor(
  private val loginUseCase: LoginUseCase,
- private val registerUseCase: RegisterUseCase
+ private val registerUseCase: RegisterUseCase,
+ private val saveUserAuthDataUseCase: SaveUserAuthDataUseCase,
+ private val saveUserAuthDataForRegisterUseCase: SaveUserAuthDataFromRegisterUseCase
 ) : ViewModel() {
 
  private val _loginResult = MutableLiveData<ResultWrapper<Response<LoginResponse>>>()
@@ -43,4 +47,17 @@ class AuthViewModel @Inject constructor(
    _registerResult.value = registerUseCase(request)
   }
  }
+
+ fun saveAuthData(value: LoginResponse) {
+  viewModelScope.launch {
+   saveUserAuthDataUseCase.invoke(value)
+  }
+ }
+
+ fun saveAuthDataOnRegistration(value: RegisterResponse) {
+  viewModelScope.launch {
+   saveUserAuthDataForRegisterUseCase.invoke(value)
+  }
+ }
+
 }

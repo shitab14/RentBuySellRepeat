@@ -46,7 +46,8 @@ android {
         create("dev") {
             dimension = "environment"
             buildConfigField("String", "API_KEY", "\"dev_key\"")
-            buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8000/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8000/\"")
+            buildConfigField("String", "BASE_URL", "\"https://shitab14.github.io/jsons/teebay/\"")
         }
         create("qa") {
             dimension = "environment"

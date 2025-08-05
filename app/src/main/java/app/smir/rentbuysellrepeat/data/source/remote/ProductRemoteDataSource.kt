@@ -1,5 +1,6 @@
 package app.smir.rentbuysellrepeat.data.source.remote
 
+import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.util.helper.network.safeApiCall
 import app.smir.rentbuysellrepeat.data.model.product.*
@@ -18,7 +19,11 @@ class ProductRemoteDataSource @Inject constructor(
     private val productApi: ProductApi
 ) {
     suspend fun getProducts(): ResultWrapper<Response<List<ProductResponse>>> {
-        return safeApiCall { productApi.getProducts() }
+        return if (BuildConfig.DEBUG) {
+            safeApiCall { productApi.getProductsMock() }
+        } else{
+            safeApiCall { productApi.getProducts() }
+        }
     }
 
     suspend fun getProductDetails(id: Int): ResultWrapper<Response<ProductResponse>> {
