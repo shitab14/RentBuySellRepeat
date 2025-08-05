@@ -27,6 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import app.smir.rentbuysellrepeat.domain.usecase.auth.LoginUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.auth.LogoutUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.RegisterUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataFromRegisterUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataUseCase
@@ -100,6 +101,7 @@ object AppModule {
         single { UpdateProductUseCase(repository = get()) }
         single { DeleteProductUseCase(repository = get()) }
         single { GetCategoriesUseCase(repository = get()) }
+        single { LogoutUseCase(repository = get()) }
     }
 
     private val utilityModule = module {
@@ -124,12 +126,13 @@ object AppModule {
         }
         viewModel {
             ProductViewModel(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
+                getProductsUseCase = get(),
+                getProductDetailsUseCase = get(),
+                createProductUseCase= get(),
+                updateProductUseCase = get(),
+                deleteProductUseCase = get(),
+                getCategoriesUseCase = get(),
+                logoutUseCase = get()
         ) }
 
     }

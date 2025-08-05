@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.smir.rentbuysellrepeat.databinding.ActivityMyProductsBinding
 import app.smir.rentbuysellrepeat.presentation.base.BaseActivity
@@ -14,6 +15,7 @@ import app.smir.rentbuysellrepeat.util.extension.showSnackBar
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.R
 import app.smir.rentbuysellrepeat.data.model.product.ProductResponse
+import kotlinx.coroutines.launch
 
 class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
     ActivityMyProductsBinding::inflate
@@ -121,8 +123,10 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
                     true
                 }
                 R.id.menu_logout -> {
-                    viewModel.logout()
-                    navigateToLogin()
+                    lifecycleScope.launch {
+                        viewModel.logout()
+                        navigateToLogin()
+                    }
                     true
                 }
                 else -> false

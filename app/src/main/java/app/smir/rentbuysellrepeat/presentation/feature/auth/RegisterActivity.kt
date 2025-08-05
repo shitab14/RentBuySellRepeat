@@ -2,6 +2,7 @@ package app.smir.rentbuysellrepeat.presentation.feature.auth
 
 import android.content.Intent
 import android.view.View
+import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.data.model.auth.RegisterRequest
 import app.smir.rentbuysellrepeat.databinding.ActivityRegisterBinding
 import app.smir.rentbuysellrepeat.presentation.base.BaseActivity
@@ -19,6 +20,19 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(
 
     override fun setupViews() {
         setupClickListeners()
+
+        mockDataPrepare()
+    }
+
+    private fun mockDataPrepare() {
+        if(BuildConfig.FLAVOR.equals("dev")) {
+            binding.etFirstName.setText("shitab")
+            binding.etLastName.setText("mir")
+            binding.etAddress.setText("shitabmir's address")
+            binding.etEmail.setText("shitabmir@gmail.com")
+            binding.etPassword.setText("123456")
+            binding.etConfirmPassword.setText("123456")
+        }
     }
 
     override fun setupObservers() {

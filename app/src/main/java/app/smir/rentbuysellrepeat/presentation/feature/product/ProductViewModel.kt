@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.smir.rentbuysellrepeat.data.model.product.*
+import app.smir.rentbuysellrepeat.domain.usecase.auth.LogoutUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.*
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import kotlinx.coroutines.launch
@@ -24,7 +25,8 @@ class ProductViewModel @Inject constructor(
     private val createProductUseCase: CreateProductUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val logoutUseCase: LogoutUseCase,
 ) : ViewModel() {
 
     private val _products = MutableLiveData<ResultWrapper<Response<List<ProductResponse>>>>()
@@ -119,7 +121,8 @@ class ProductViewModel @Inject constructor(
         return true
     }
 
-    fun logout() {
-        // TODO: SHITAB will add logout logic here
+    suspend fun logout() {
+        logoutUseCase.invoke()
     }
+
 }
