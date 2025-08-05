@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import app.smir.rentbuysellrepeat.data.model.product.*
 import app.smir.rentbuysellrepeat.domain.usecase.auth.LogoutUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.*
+import app.smir.rentbuysellrepeat.presentation.feature.product.create.CreateProductJourneySingleton
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -124,5 +125,18 @@ class ProductViewModel @Inject constructor(
     suspend fun logout() {
         logoutUseCase.invoke()
     }
+
+    fun saveTitle(title: String) {
+        CreateProductJourneySingleton.updateTitle(title = title)
+    }
+
+    fun getTitle(): String {
+        return CreateProductJourneySingleton.getTitle()
+    }
+
+    fun clearAllInput() {
+        return CreateProductJourneySingleton.clearAll()
+    }
+
 
 }

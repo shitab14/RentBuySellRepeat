@@ -95,7 +95,7 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
         }
 
         binding.fabAddProduct.setOnClickListener {
-//            startActivity(Intent(this, CreateProductActivity::class.java)) // TODO: SHITAB will ...
+            startActivity(Intent(this, CreateProductActivity::class.java))
         }
     }
 
@@ -113,7 +113,6 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_my_products -> {
-                    // Already on this page
                     binding.drawerLayout.closeDrawers()
                     true
                 }

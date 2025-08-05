@@ -21,4 +21,8 @@
     <string name="close_drawer">Close navigation drawer</string>
     <string name="my_products_all_caps">MY PRODUCTS</string>
     <string name="more_details">More Details</string>
+    <string name="loading">Loading...</string>
+    <string name="select_a_title_for_your_product">Select a title for your product</string>
+    <string name="back">BACK</string>
+    <string name="next">NEXT</string>
 </resources>
