@@ -68,4 +68,8 @@ class ProductRemoteDataSource @Inject constructor(
     suspend fun getCategories(): ResultWrapper<Response<List<CategoryResponse>>> {
         return safeApiCall { productApi.getCategories() }
     }
+
+    suspend fun getCategoriesMock(): ResultWrapper<Response<List<CategoryResponse>>> {
+        return safeApiCall { productApi.getCategoriesMock() }
+    }
 }

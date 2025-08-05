@@ -44,4 +44,7 @@ interface ProductApi {
 
     @GET("api/products/categories/")
     suspend fun getCategories(): Response<List<CategoryResponse>>
+
+    @GET("api/products/categories.json")
+    suspend fun getCategoriesMock(): Response<List<CategoryResponse>>
 }

@@ -7,4 +7,5 @@
     <color name="green_indicator">#1AAE9F</color>
     <color name="progress_bar">#D8DEE3</color>
     <color name="button_color">#6558F5</color>
+    <color name="red">#B71C1C</color>
 </resources>

@@ -29,4 +29,8 @@ class AuthRemoteDataSource @Inject constructor(
   return safeApiCall { authApi.register(request) }
  }
 
+ suspend fun registerMock(request: RegisterRequest): ResultWrapper<Response<RegisterResponse>> {
+  return safeApiCall { authApi.registerMock() }
+ }
+
 }

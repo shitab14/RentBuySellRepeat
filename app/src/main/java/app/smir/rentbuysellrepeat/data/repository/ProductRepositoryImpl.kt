@@ -1,5 +1,6 @@
 package app.smir.rentbuysellrepeat.data.repository
 
+import app.smir.rentbuysellrepeat.BuildConfig
 import app.smir.rentbuysellrepeat.data.model.product.*
 import app.smir.rentbuysellrepeat.data.source.local.ProductLocalDataSource
 import app.smir.rentbuysellrepeat.data.source.remote.ProductRemoteDataSource
@@ -64,6 +65,10 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCategories(): ResultWrapper<Response<List<CategoryResponse>>> {
-        return remoteDataSource.getCategories()
+        return if(BuildConfig.FLAVOR.equals("dev")) {
+            remoteDataSource.getCategoriesMock()
+        } else {
+            remoteDataSource.getCategories()
+        }
     }
 }

@@ -133,6 +133,13 @@ class ProductViewModel @Inject constructor(
     fun getTitle(): String {
         return CreateProductJourneySingleton.getTitle()
     }
+    fun saveCategories(categories: List<CategoryResponse>) {
+        CreateProductJourneySingleton.updateCategories(categories)
+    }
+
+    fun getSavedCategories(): List<CategoryResponse> {
+        return CreateProductJourneySingleton.getCategories()
+    }
 
     fun clearAllInput() {
         return CreateProductJourneySingleton.clearAll()

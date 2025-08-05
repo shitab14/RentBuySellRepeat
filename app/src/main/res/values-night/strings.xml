@@ -25,4 +25,5 @@
     <string name="select_a_title_for_your_product">Select a title for your product</string>
     <string name="back">BACK</string>
     <string name="next">NEXT</string>
+    <string name="select_categories">Select Categories</string>
 </resources>

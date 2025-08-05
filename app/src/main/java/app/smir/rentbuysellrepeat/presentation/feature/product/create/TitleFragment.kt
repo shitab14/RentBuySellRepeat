@@ -43,7 +43,7 @@ class TitleFragment : Fragment() {
     }
 
     fun validate(): Boolean {
-        return if (binding.etProductTitle.text.isNullOrEmpty()) {
+        return if (viewModel.getTitle().isEmpty()) {
             binding.root.showSnackBar("Please enter a title")
             false
         } else {

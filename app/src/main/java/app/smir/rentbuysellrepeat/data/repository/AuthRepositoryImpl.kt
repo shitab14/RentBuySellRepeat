@@ -31,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun register(request: RegisterRequest): ResultWrapper<Response<RegisterResponse>> {
         return if(BuildConfig.FLAVOR.equals("dev")) {
-            remoteDataSource.register(request)
+            remoteDataSource.registerMock(request)
         } else {
             remoteDataSource.register(request)
         }

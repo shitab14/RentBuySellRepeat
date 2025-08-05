@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import app.smir.rentbuysellrepeat.databinding.ActivityCreateProductBinding
 import app.smir.rentbuysellrepeat.presentation.base.BaseActivity
 import app.smir.rentbuysellrepeat.presentation.feature.product.adapter.CreateProductPagerAdapter
+import app.smir.rentbuysellrepeat.presentation.feature.product.create.CategoriesFragment
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.TitleFragment
 import app.smir.rentbuysellrepeat.util.extension.showSnackBar
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
@@ -88,10 +89,12 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
         binding.btnNext.setOnClickListener {
             if (validateCurrentStep()) {
                 if (binding.viewPager.currentItem < pagerAdapter.itemCount - 1) {
-                    // binding.viewPager.currentItem += 1 // TODO: SHITAB will revert after adding other fragments [WIP]
+                     binding.viewPager.currentItem += 1
                 } else {
                     viewModel.createProduct()
                 }
+            } else {
+                binding.root.showSnackBar("Please fill in all fields")
             }
         }
     }
@@ -101,10 +104,25 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
             0 -> {
                 val fragment = supportFragmentManager.findFragmentByTag("f${binding.viewPager.currentItem}") as? TitleFragment
                 viewModel.saveTitle(fragment?.getProductTitle() ?: "")
-                viewModel.validateTitle()
+                if(fragment?.validate() == true) {
+                    true
+                } else {
+                    binding.root.showSnackBar("Please enter a title")
+                    false
+                }
+                //viewModel.validateTitle()
 
             }
-            1 -> viewModel.validateCategories()
+            1 -> {
+                val fragment = supportFragmentManager.findFragmentByTag("f${binding.viewPager.currentItem}") as? CategoriesFragment
+                if(fragment?.validate()==true) {
+                    true
+                } else {
+                    binding.root.showSnackBar("Please select at least one category")
+                    false
+                }
+//                    viewModel.validateCategories()
+            }
             2 -> viewModel.validateDescription()
             3 -> viewModel.validateImage()
             4 -> viewModel.validatePrice()
@@ -135,5 +153,10 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
 
     fun openImagePicker() {
         imagePickerLauncher.launch("image/*")
+    }
+
+    override fun onDestroy() {
+        viewModel.clearAllInput()
+        super.onDestroy()
     }
 }
