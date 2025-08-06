@@ -41,6 +41,7 @@ import app.smir.rentbuysellrepeat.domain.usecase.product.GetCategoriesUseCase
 import app.smir.rentbuysellrepeat.presentation.feature.auth.AuthViewModel
 import app.smir.rentbuysellrepeat.presentation.feature.product.ProductViewModel
 import app.smir.rentbuysellrepeat.presentation.feature.splash.SplashViewModel
+import app.smir.rentbuysellrepeat.util.helper.PermissionHandler
 import org.koin.androidx.viewmodel.dsl.viewModel
 
 object AppModule {

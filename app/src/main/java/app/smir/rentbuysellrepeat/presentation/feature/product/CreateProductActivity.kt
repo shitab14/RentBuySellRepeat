@@ -10,8 +10,12 @@ import app.smir.rentbuysellrepeat.databinding.ActivityCreateProductBinding
 import app.smir.rentbuysellrepeat.presentation.base.BaseActivity
 import app.smir.rentbuysellrepeat.presentation.feature.product.adapter.CreateProductPagerAdapter
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.CategoriesFragment
+import app.smir.rentbuysellrepeat.presentation.feature.product.create.DescriptionFragment
+import app.smir.rentbuysellrepeat.presentation.feature.product.create.ImageFragment
+import app.smir.rentbuysellrepeat.presentation.feature.product.create.PriceFragment
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.TitleFragment
 import app.smir.rentbuysellrepeat.util.extension.showSnackBar
+import app.smir.rentbuysellrepeat.util.helper.AppLogger
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 
 class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
@@ -20,16 +24,6 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
 
     private val viewModel: ProductViewModel by viewModel()
     private lateinit var pagerAdapter: CreateProductPagerAdapter
-    private var selectedImageUri: Uri? = null
-
-    private val imagePickerLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            selectedImageUri = it
-            viewModel.setProductImageUri(it)
-        }
-    }
 
     override fun setupViews() {
         setupViewPager()
@@ -89,12 +83,15 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
         binding.btnNext.setOnClickListener {
             if (validateCurrentStep()) {
                 if (binding.viewPager.currentItem < pagerAdapter.itemCount - 1) {
-                     binding.viewPager.currentItem += 1
+                    // 0-4
+                    binding.viewPager.currentItem += 1
                 } else {
+                    // 5
                     viewModel.createProduct()
+                    this@CreateProductActivity.finish()
                 }
             } else {
-                binding.root.showSnackBar("Please fill in all fields")
+                binding.root.showSnackBar("Please fill in the required fields")
             }
         }
     }
@@ -115,6 +112,7 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
             }
             1 -> {
                 val fragment = supportFragmentManager.findFragmentByTag("f${binding.viewPager.currentItem}") as? CategoriesFragment
+                fragment?.getSelectedChipValues()?.let { viewModel.saveCategories(it) }
                 if(fragment?.validate()==true) {
                     true
                 } else {
@@ -123,9 +121,41 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
                 }
 //                    viewModel.validateCategories()
             }
-            2 -> viewModel.validateDescription()
-            3 -> viewModel.validateImage()
-            4 -> viewModel.validatePrice()
+            2 -> {
+                val fragment = supportFragmentManager.findFragmentByTag("f${binding.viewPager.currentItem}") as? DescriptionFragment
+
+                if(fragment?.validate()==true) {
+                    true
+                } else {
+                    binding.root.showSnackBar("Please enter a description")
+                    false
+                }
+//                viewModel.validateDescription()
+            }
+            3 -> {
+//                val fragment = supportFragmentManager.findFragmentByTag("f${binding.viewPager.currentItem}") as? ImageFragment
+
+//                if(fragment?.validate()==true) {
+//                    true
+//                } else {
+//                    binding.root.showSnackBar("Please enter a description")
+//                    false
+//                }
+//                viewModel.validateImage()
+
+                return true
+            }
+            4 -> {
+                AppLogger.e("This is number 4")
+                val fragment = supportFragmentManager.findFragmentByTag("f${binding.viewPager.currentItem}") as? PriceFragment
+                if(fragment?.validate() == true) {
+                    true
+                } else {
+                    binding.root.showSnackBar("Please enter a Purchase Price or Rent Price")
+                    false
+                }
+//                viewModel.validatePrice()
+            }
             else -> true
         }
     }
@@ -149,10 +179,6 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
     private fun navigateToMyProducts() {
         startActivity(Intent(this, MyProductsActivity::class.java))
         finish()
-    }
-
-    fun openImagePicker() {
-        imagePickerLauncher.launch("image/*")
     }
 
     override fun onDestroy() {

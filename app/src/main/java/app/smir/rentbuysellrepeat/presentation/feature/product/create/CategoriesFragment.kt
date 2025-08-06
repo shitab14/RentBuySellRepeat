@@ -30,13 +30,12 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViews()
-        setupObservers()
-        viewModel.loadCategories()
     }
 
-    private fun setupViews() {
-        // TODO: SHITAB will implement category selection UI
+    override fun onResume() {
+        super.onResume()
+        setupObservers()
+        viewModel.loadCategories()
     }
 
     private fun setupObservers() {
@@ -98,6 +97,10 @@ class CategoriesFragment : Fragment() {
 //            (chip.tag as? Int)?.let { selectedCategoryIds.add(it) }
         }
         return selectedChips
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     override fun onDestroyView() {

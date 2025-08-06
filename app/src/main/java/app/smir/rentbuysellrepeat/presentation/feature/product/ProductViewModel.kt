@@ -15,8 +15,10 @@ import app.smir.rentbuysellrepeat.domain.usecase.product.*
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.CreateProductJourneySingleton
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -48,7 +50,7 @@ class ProductViewModel @Inject constructor(
     private val _currentStep = MutableLiveData(1)
     val currentStep: LiveData<Int> = _currentStep
 
-    private var productImageUri: Uri? = null
+//    private var productImageUri: Uri? = null
 
     fun loadProducts() {
         viewModelScope.launch {
@@ -65,10 +67,7 @@ class ProductViewModel @Inject constructor(
     }
 
     fun createProduct() {
-        viewModelScope.launch {
-            _createProductResult.value = ResultWrapper.Loading
-            // TODO: SHITAB will add product creation logic here
-        }
+
     }
 
     fun deleteProduct(id: Int) {
@@ -93,9 +92,9 @@ class ProductViewModel @Inject constructor(
         _currentStep.value = step
     }
 
-    fun setProductImageUri(uri: Uri) {
-        productImageUri = uri
-    }
+//    fun setProductImageUri(uri: Uri) {
+//        productImageUri = uri
+//    }
 
     fun validateTitle(): Boolean {
         // TODO: SHITAB will add title validation logic here
@@ -112,10 +111,10 @@ class ProductViewModel @Inject constructor(
         return true
     }
 
-    fun validateImage(): Boolean {
+//    fun validateImage(): Boolean {
         // TODO: SHITAB will add image validation logic here
-        return productImageUri != null
-    }
+//        return productImageUri != null
+//    }
 
     fun validatePrice(): Boolean {
         // TODO: SHITAB will add price validation logic here
@@ -126,6 +125,7 @@ class ProductViewModel @Inject constructor(
         logoutUseCase.invoke()
     }
 
+    // Title
     fun saveTitle(title: String) {
         CreateProductJourneySingleton.updateTitle(title = title)
     }
@@ -133,6 +133,8 @@ class ProductViewModel @Inject constructor(
     fun getTitle(): String {
         return CreateProductJourneySingleton.getTitle()
     }
+
+    // Categories
     fun saveCategories(categories: List<CategoryResponse>) {
         CreateProductJourneySingleton.updateCategories(categories)
     }
@@ -141,9 +143,54 @@ class ProductViewModel @Inject constructor(
         return CreateProductJourneySingleton.getCategories()
     }
 
+    // Description
+    fun saveDescription(description: String) {
+        CreateProductJourneySingleton.updateDescription(description = description)
+    }
+
+    fun getDescription(): String {
+        return CreateProductJourneySingleton.getDescription()
+    }
+
+    // Images
+    fun saveImages(images: List<Uri>) {
+        CreateProductJourneySingleton.addImageUris(uris = images)
+    }
+
+    fun getImages(): List<Uri> {
+        return CreateProductJourneySingleton.imageUris
+    }
+
+    // Price
+    // Purchase Price
+    fun savePurchasePrice(value: String) {
+        CreateProductJourneySingleton.updatePurchasePrice(value)
+    }
+
+    fun getPurchasePrice(): String {
+        return CreateProductJourneySingleton.getPurchasePrice()
+    }
+
+    // Rent Price
+    fun saveRentPrice(value: String) {
+        CreateProductJourneySingleton.updateRentPrice(value)
+    }
+
+    fun getRentPrice(): String {
+        return CreateProductJourneySingleton.getRentPrice()
+    }
+
+    // Rent Option
+    fun saveRentOption(value: String) {
+        CreateProductJourneySingleton.updateRentOption(value)
+    }
+
+    fun getRentOption(): String {
+        return CreateProductJourneySingleton.getRentOption()
+    }
+
     fun clearAllInput() {
         return CreateProductJourneySingleton.clearAll()
     }
-
 
 }

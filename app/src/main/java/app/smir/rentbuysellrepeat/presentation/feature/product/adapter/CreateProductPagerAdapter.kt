@@ -12,16 +12,16 @@ import app.smir.rentbuysellrepeat.presentation.feature.product.create.*
 class CreateProductPagerAdapter(fragmentActivity: FragmentActivity) :
  FragmentStateAdapter(fragmentActivity) {
 
- override fun getItemCount(): Int = 2 // 6
+ override fun getItemCount(): Int = 6
 
  override fun createFragment(position: Int): Fragment {
   return when (position) {
    0 -> TitleFragment()
    1 -> CategoriesFragment()
-//   2 -> DescriptionFragment()
-//   3 -> ImageFragment()
-//   4 -> PriceFragment()
-//   5 -> SummaryFragment()
+   2 -> DescriptionFragment()
+   3 -> ImageFragment()
+   4 -> PriceFragment()
+   5 -> SummaryFragment()
    else -> throw IllegalArgumentException("Invalid position: $position")
   }
  }

@@ -28,4 +28,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_categories">Select Categories</string>
+    <string name="product_description">Product Description</string>
+    <string name="select_description">Select Description</string>
+    <string name="take_picture_using_camera">Take Picture Using Camera</string>
+    <string name="upload_product_picture">Upload Product Picture</string>
+    <string name="upload_picture_from_device">Upload Picture From Device</string>
+    <string name="select_price">Select Price</string>
+    <string name="purchase_price">Purchase Price</string>
+    <string name="rent">Rent</string>
+    <string name="rent_price">Rent Price</string>
+    <string name="summary">Summary</string>
+    <string name="title">Title:</string>
+    <string name="categories">Categories:</string>
+    <string name="description">Description:</string>
+    <string name="price">Price:</string>
+    <string name="to_rent">To Rent:</string>
 </resources>
