@@ -2,6 +2,7 @@ package app.smir.rentbuysellrepeat.presentation.feature.product.create
 
 import android.Manifest
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -98,11 +99,20 @@ class ImageFragment : Fragment() {
     }
 
     private fun requestStoragePermission() {
-        val permissions = arrayOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
+        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        } else {
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        }
+
         permissionHandler.requestMultiplePermissions(permissions, object : PermissionHandler.MultiplePermissionsCallback {
             override fun onPermissionsResult(results: Map<String, Boolean>) {
                 // Check if all permissions were granted
