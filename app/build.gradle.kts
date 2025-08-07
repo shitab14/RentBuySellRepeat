@@ -131,6 +131,9 @@ dependencies {
     // Swipe to Refresh
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    // Biometric
+    implementation("androidx.biometric:biometric:1.1.0")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:5.4.0")

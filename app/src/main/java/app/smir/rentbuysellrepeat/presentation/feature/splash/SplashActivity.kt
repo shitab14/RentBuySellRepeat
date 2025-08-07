@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import org.koin.android.ext.android.inject
 import app.smir.rentbuysellrepeat.databinding.ActivitySplashBinding
-import app.smir.rentbuysellrepeat.util.helper.DataStoreManager
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -23,7 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
-//    private val dataStoreManager: DataStoreManager by inject()
 
     private val viewModel: SplashViewModel by viewModel()
 
