@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide
 
 class ProductAdapter(
     private val onItemClick: (ProductResponse) -> Unit,
-    private val onDeleteClick: (ProductResponse) -> Unit
+    private val onDeleteClick: (String) -> Unit
 ) : ListAdapter<ProductResponse, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -80,7 +80,7 @@ class ProductAdapter(
                     .placeholder(R.drawable.ic_placeholder)
                     .into(ivProduct)
 
-                btnDelete.setOnClickListener { onDeleteClick(product) }
+                btnDelete.setOnClickListener { onDeleteClick(product.id.toString()) }
                 root.setOnClickListener { onItemClick(product) }
             }
         }

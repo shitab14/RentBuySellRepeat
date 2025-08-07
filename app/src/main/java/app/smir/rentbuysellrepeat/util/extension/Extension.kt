@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -37,4 +38,26 @@ fun View.invisible() {
 
 fun View.gone() {
     visibility = View.GONE
+}
+
+fun Context.showConfirmationDialog(
+    title: String,
+    subtitle: String,
+    yesText: String,
+    noText: String,
+    onYes: () -> Unit = {},
+    onNo: () -> Unit = {}
+) {
+    AlertDialog.Builder(this)
+        .setTitle(title)
+        .setMessage(subtitle)
+        .setPositiveButton(yesText) { dialog, _ ->
+            onYes()
+            dialog.dismiss()
+        }
+        .setNegativeButton(noText) { dialog, _ ->
+            dialog.dismiss()
+            onNo()
+        }
+        .show()
 }

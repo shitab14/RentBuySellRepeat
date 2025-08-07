@@ -32,16 +32,18 @@ import app.smir.rentbuysellrepeat.domain.usecase.auth.RegisterUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataFromRegisterUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.SaveUserAuthDataUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.auth.UserLoggedInUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.CacheProductLocallyUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.ClearCacheProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetProductsUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetProductDetailsUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.CreateProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.UpdateProductUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.DeleteProductUseCase
+import app.smir.rentbuysellrepeat.domain.usecase.product.GetCacheProductLocallyUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.GetCategoriesUseCase
 import app.smir.rentbuysellrepeat.presentation.feature.auth.AuthViewModel
 import app.smir.rentbuysellrepeat.presentation.feature.product.ProductViewModel
 import app.smir.rentbuysellrepeat.presentation.feature.splash.SplashViewModel
-import app.smir.rentbuysellrepeat.util.helper.PermissionHandler
 import org.koin.androidx.viewmodel.dsl.viewModel
 
 object AppModule {
@@ -74,7 +76,7 @@ object AppModule {
     private val databaseModule = module {
         single { AppDatabase.getDatabase(androidContext()) }
         single { get<AppDatabase>().authDao() }
-        single { get<AppDatabase>().productDao() }
+//        single { get<AppDatabase>().productDao() }
     // TODO: SHITAB will add product DAO methods here
     }
 
@@ -82,7 +84,7 @@ object AppModule {
         single { AuthRemoteDataSource(get()) }
         single { AuthLocalDataSource(get(), get()) }
         single { ProductRemoteDataSource(get()) }
-        single { ProductLocalDataSource(get()) }
+        single { ProductLocalDataSource(/*get()*/) }
     }
 
     private val repositoryModule = module {
@@ -102,6 +104,9 @@ object AppModule {
         single { UpdateProductUseCase(repository = get()) }
         single { DeleteProductUseCase(repository = get()) }
         single { GetCategoriesUseCase(repository = get()) }
+//        single { CacheProductLocallyUseCase(repository = get()) }
+//        single { GetCacheProductLocallyUseCase(repository = get()) }
+//        single { ClearCacheProductUseCase(repository = get()) }
         single { LogoutUseCase(repository = get()) }
     }
 
@@ -134,7 +139,7 @@ object AppModule {
                 deleteProductUseCase = get(),
                 getCategoriesUseCase = get(),
                 logoutUseCase = get()
-        ) }
+            ) }
 
     }
 

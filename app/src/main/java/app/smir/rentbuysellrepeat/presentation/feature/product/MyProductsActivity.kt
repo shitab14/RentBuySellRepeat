@@ -12,6 +12,7 @@ import app.smir.rentbuysellrepeat.presentation.base.BaseActivity
 import app.smir.rentbuysellrepeat.presentation.feature.auth.LoginActivity
 import app.smir.rentbuysellrepeat.presentation.feature.product.adapter.ProductAdapter
 import app.smir.rentbuysellrepeat.util.extension.showSnackBar
+import app.smir.rentbuysellrepeat.util.extension.showConfirmationDialog
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.R
 import app.smir.rentbuysellrepeat.data.model.product.ProductResponse
@@ -76,10 +77,12 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
     private fun setupRecyclerView() {
         productAdapter = ProductAdapter(
             onItemClick = { product ->
+                binding.root.showSnackBar("Will Show Product Page")
                 // TODO: SHITAB will add navigation to edit product
             },
-            onDeleteClick = { product ->
-                viewModel.showDeleteConfirmation(product.id)
+            onDeleteClick = { id ->
+//                viewModel.showDeleteConfirmation(product.id)
+                showDeleteConfirmationDialog(id)
             }
         )
 
@@ -87,6 +90,18 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
             layoutManager = LinearLayoutManager(this@MyProductsActivity)
             adapter = productAdapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(id: String) {
+        binding.root.context.showConfirmationDialog(
+            title = "Delete",
+            subtitle = "Are you sure you want to delete this product?",
+            yesText = "Yes",
+            noText = "No",
+            onYes = {
+                viewModel.deleteProduct(id)
+            },
+        )
     }
 
     private fun setupClickListeners() {
@@ -118,6 +133,7 @@ class MyProductsActivity : BaseActivity<ActivityMyProductsBinding>(
                 }
                 R.id.menu_all_products -> {
                     // TODO: SHITAB will add navigation to all products
+                    binding.root.showSnackBar("Will Show All Product Page")
                     binding.drawerLayout.closeDrawers()
                     true
                 }

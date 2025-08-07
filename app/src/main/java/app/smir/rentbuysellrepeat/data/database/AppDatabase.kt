@@ -9,18 +9,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import app.smir.rentbuysellrepeat.data.database.dao.AuthDao
-import app.smir.rentbuysellrepeat.data.database.dao.ProductDao
 import app.smir.rentbuysellrepeat.data.database.entity.AuthEntity
 
 @Database(
  entities = [AuthEntity::class, /*ProductEntity::class*/], // TODO: SHITAB will add product DAO methods here
- version = 1,
+ version = 2,
  exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
  abstract fun authDao(): AuthDao
- abstract fun productDao(): ProductDao
+// abstract fun productDao(): ProductDao
 
  companion object {
   @Volatile

@@ -19,8 +19,8 @@ class CreateProductUseCase @Inject constructor(
         seller: RequestBody,
         title: RequestBody,
         description: RequestBody,
-        categories: RequestBody,
-        productImage: MultipartBody.Part,
+        categories: List<String>,
+        productImage: MultipartBody.Part?,
         purchasePrice: RequestBody,
         rentPrice: RequestBody,
         rentOption: RequestBody

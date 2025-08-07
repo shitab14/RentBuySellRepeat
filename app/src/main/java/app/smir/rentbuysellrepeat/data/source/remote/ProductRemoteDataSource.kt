@@ -34,8 +34,8 @@ class ProductRemoteDataSource @Inject constructor(
         seller: RequestBody,
         title: RequestBody,
         description: RequestBody,
-        categories: RequestBody,
-        productImage: MultipartBody.Part,
+        categories: List<String>,
+        productImage: MultipartBody.Part?,
         purchasePrice: RequestBody,
         rentPrice: RequestBody,
         rentOption: RequestBody
@@ -46,7 +46,7 @@ class ProductRemoteDataSource @Inject constructor(
                 title,
                 description,
                 categories,
-                productImage,
+                productImage ?: MultipartBody.Part.createFormData("productImage", ""),
                 purchasePrice,
                 rentPrice,
                 rentOption
@@ -61,8 +61,12 @@ class ProductRemoteDataSource @Inject constructor(
         return safeApiCall { productApi.updateProduct(id, request) }
     }
 
-    suspend fun deleteProduct(id: Int): ResultWrapper<Response<Void>> {
-        return safeApiCall { productApi.deleteProduct(id) }
+    suspend fun deleteProduct(id: String): ResultWrapper<Response<Void>> {
+        return if (BuildConfig.FLAVOR.equals("dev")) {
+            safeApiCall { productApi.deleteProductMock(id) }
+        } else{
+            safeApiCall { productApi.deleteProduct(id) }
+        }
     }
 
     suspend fun getCategories(): ResultWrapper<Response<List<CategoryResponse>>> {

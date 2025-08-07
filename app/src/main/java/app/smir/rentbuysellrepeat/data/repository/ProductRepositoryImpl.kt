@@ -1,12 +1,12 @@
 package app.smir.rentbuysellrepeat.data.repository
 
 import app.smir.rentbuysellrepeat.BuildConfig
+import app.smir.rentbuysellrepeat.data.database.entity.ProductEntity
 import app.smir.rentbuysellrepeat.data.model.product.*
 import app.smir.rentbuysellrepeat.data.source.local.ProductLocalDataSource
 import app.smir.rentbuysellrepeat.data.source.remote.ProductRemoteDataSource
 import app.smir.rentbuysellrepeat.domain.repository.ProductRepository
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
-import app.smir.rentbuysellrepeat.util.helper.network.safeApiCall
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -19,7 +19,7 @@ shitabmir@gmail.com
 
 class ProductRepositoryImpl @Inject constructor(
     private val remoteDataSource: ProductRemoteDataSource,
-    private val localDataSource: ProductLocalDataSource
+    private val localDataSource: ProductLocalDataSource,
 ) : ProductRepository {
 
     override suspend fun getProducts(): ResultWrapper<Response<List<ProductResponse>>> {
@@ -34,8 +34,8 @@ class ProductRepositoryImpl @Inject constructor(
         seller: RequestBody,
         title: RequestBody,
         description: RequestBody,
-        categories: RequestBody,
-        productImage: MultipartBody.Part,
+        categories: List<String>,
+        productImage: MultipartBody.Part?,
         purchasePrice: RequestBody,
         rentPrice: RequestBody,
         rentOption: RequestBody
@@ -60,7 +60,19 @@ class ProductRepositoryImpl @Inject constructor(
         return remoteDataSource.updateProduct(id, request)
     }
 
-    override suspend fun deleteProduct(id: Int): ResultWrapper<Response<Void>> {
+    override suspend fun saveProductLocally(product: ProductEntity) {
+        localDataSource.cacheOnGoingProduct(product)
+    }
+
+    override suspend fun getProductLocally(): List<ProductEntity> {
+        return localDataSource.getCachedProducts()
+    }
+
+    override suspend fun deleteProductLocally() {
+        localDataSource.removeOnGoingProduct()
+    }
+
+    override suspend fun deleteProduct(id: String): ResultWrapper<Response<Void>> {
         return remoteDataSource.deleteProduct(id)
     }
 

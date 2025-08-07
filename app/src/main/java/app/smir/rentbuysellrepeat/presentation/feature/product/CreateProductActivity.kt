@@ -1,9 +1,9 @@
 package app.smir.rentbuysellrepeat.presentation.feature.product
 
 import android.content.Intent
-import android.net.Uri
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.viewpager2.widget.ViewPager2
 import app.smir.rentbuysellrepeat.databinding.ActivityCreateProductBinding
@@ -11,12 +11,14 @@ import app.smir.rentbuysellrepeat.presentation.base.BaseActivity
 import app.smir.rentbuysellrepeat.presentation.feature.product.adapter.CreateProductPagerAdapter
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.CategoriesFragment
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.DescriptionFragment
-import app.smir.rentbuysellrepeat.presentation.feature.product.create.ImageFragment
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.PriceFragment
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.TitleFragment
 import app.smir.rentbuysellrepeat.util.extension.showSnackBar
 import app.smir.rentbuysellrepeat.util.helper.AppLogger
+import app.smir.rentbuysellrepeat.util.helper.MultipartHelper
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
     ActivityCreateProductBinding::inflate
@@ -85,15 +87,63 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
                 if (binding.viewPager.currentItem < pagerAdapter.itemCount - 1) {
                     // 0-4
                     binding.viewPager.currentItem += 1
-                } else {
+                }
+                else {
                     // 5
-                    viewModel.createProduct()
-                    this@CreateProductActivity.finish()
+
+                    makeMultipartAndCall()
+                    //this@CreateProductActivity.finish()
                 }
             } else {
                 binding.root.showSnackBar("Please fill in the required fields")
             }
         }
+    }
+
+    private fun makeMultipartAndCall() {
+        val categoryValues: List<String> = viewModel.getSavedCategories().map {
+            it.value
+        }
+
+        lifecycleScope.launch {
+            try {
+                val sellerPart = MultipartHelper.createTextPart("seller", "0")
+                val titlePart = MultipartHelper.createTextPart("title", viewModel.getTitle())
+                val descriptionPart = MultipartHelper.createTextPart("description", viewModel.getDescription())
+
+                val categories = categoryValues
+
+                val purchasePricePart = MultipartHelper.createTextPart("purchase_price", viewModel.getPurchasePrice())
+                val rentPricePart = MultipartHelper.createTextPart("rent_price", viewModel.getRentPrice())
+                val rentOptionPart = MultipartHelper.createTextPart("rent_option", viewModel.getRentOption())
+
+                var imagePart:MultipartBody.Part? = null
+                if(viewModel.getImages().isNotEmpty()) {
+                     imagePart = MultipartHelper.createFilePart(
+                        this@CreateProductActivity,
+                        "product_image",
+                        viewModel.getImages().first()
+                    )
+                }
+                viewModel.createProduct(
+                    sellerPart,
+                    titlePart,
+                    descriptionPart,
+                    categories,
+                    purchasePricePart,
+                    rentPricePart,
+                    rentOptionPart,
+                    imagePart
+                )
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+
+
     }
 
     private fun validateCurrentStep(): Boolean {

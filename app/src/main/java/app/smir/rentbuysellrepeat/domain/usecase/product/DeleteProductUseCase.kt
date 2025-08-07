@@ -12,7 +12,7 @@ shitabmir@gmail.com
 class DeleteProductUseCase @Inject constructor(
     private val repository: ProductRepository
 ) {
-    suspend operator fun invoke(id: Int): ResultWrapper<Response<Void>> {
+    suspend operator fun invoke(id: String): ResultWrapper<Response<Void>> {
         return repository.deleteProduct(id)
     }
 }

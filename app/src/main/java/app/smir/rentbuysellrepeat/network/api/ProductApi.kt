@@ -26,7 +26,7 @@ interface ProductApi {
         @Part("seller") seller: RequestBody,
         @Part("title") title: RequestBody,
         @Part("description") description: RequestBody,
-        @Part("categories") categories: RequestBody,
+        @Part("categories[]") categories: List<String>,
         @Part productImage: MultipartBody.Part,
         @Part("purchase_price") purchasePrice: RequestBody,
         @Part("rent_price") rentPrice: RequestBody,
@@ -40,7 +40,10 @@ interface ProductApi {
     ): Response<ProductResponse>
 
     @DELETE("api/products/{id}")
-    suspend fun deleteProduct(@Path("id") id: Int): Response<Void>
+    suspend fun deleteProduct(@Path("id") id: String): Response<Void>
+
+    @GET("api/products/{id}")
+    suspend fun deleteProductMock(@Path("id") id: String): Response<Void>
 
     @GET("api/products/categories/")
     suspend fun getCategories(): Response<List<CategoryResponse>>

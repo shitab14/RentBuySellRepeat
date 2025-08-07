@@ -1,5 +1,6 @@
 package app.smir.rentbuysellrepeat.domain.repository
 
+import app.smir.rentbuysellrepeat.data.database.entity.ProductEntity
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import app.smir.rentbuysellrepeat.data.model.product.*
 import okhttp3.MultipartBody
@@ -18,8 +19,8 @@ interface ProductRepository {
   seller: RequestBody,
   title: RequestBody,
   description: RequestBody,
-  categories: RequestBody,
-  productImage: MultipartBody.Part,
+  categories: List<String>,
+  productImage: MultipartBody.Part?,
   purchasePrice: RequestBody,
   rentPrice: RequestBody,
   rentOption: RequestBody
@@ -28,6 +29,9 @@ interface ProductRepository {
   id: Int,
   request: UpdateProductRequest
  ): ResultWrapper<Response<ProductResponse>>
- suspend fun deleteProduct(id: Int): ResultWrapper<Response<Void>>
+ suspend fun saveProductLocally(product: ProductEntity)
+ suspend fun getProductLocally(): List<ProductEntity>
+ suspend fun deleteProductLocally()
+ suspend fun deleteProduct(id: String): ResultWrapper<Response<Void>>
  suspend fun getCategories(): ResultWrapper<Response<List<CategoryResponse>>>
 }

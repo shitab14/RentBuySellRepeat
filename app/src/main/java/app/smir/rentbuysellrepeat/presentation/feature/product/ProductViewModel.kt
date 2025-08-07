@@ -9,16 +9,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.smir.rentbuysellrepeat.data.database.entity.ProductEntity
 import app.smir.rentbuysellrepeat.data.model.product.*
 import app.smir.rentbuysellrepeat.domain.usecase.auth.LogoutUseCase
 import app.smir.rentbuysellrepeat.domain.usecase.product.*
 import app.smir.rentbuysellrepeat.presentation.feature.product.create.CreateProductJourneySingleton
 import app.smir.rentbuysellrepeat.util.helper.network.ResultWrapper
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -29,6 +27,9 @@ class ProductViewModel @Inject constructor(
     private val updateProductUseCase: UpdateProductUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
+//    private val cacheProductLocallyUseCase: CacheProductLocallyUseCase,
+//    private val getCacheProductLocallyUseCase: GetCacheProductLocallyUseCase,
+//    private val clearCacheProductUseCase: ClearCacheProductUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : ViewModel() {
 
@@ -66,19 +67,39 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun createProduct() {
+    fun createProduct(
+        sellerPart: MultipartBody.Part,
+        titlePart: MultipartBody.Part,
+        descriptionPart: MultipartBody.Part,
+        categories: List<String>,
+        purchasePricePart: MultipartBody.Part,
+        rentPricePart: MultipartBody.Part,
+        rentOptionPart: MultipartBody.Part,
+        imagePart: MultipartBody.Part?,
+    ) {
+        viewModelScope.launch {
 
+            _createProductResult.value = ResultWrapper.Loading
+
+            _createProductResult.value = createProductUseCase.invoke(
+                seller = sellerPart.body,
+                title = titlePart.body,
+                description = descriptionPart.body,
+                categories = categories,
+                productImage = imagePart,
+                purchasePrice = purchasePricePart.body,
+                rentPrice = rentPricePart.body,
+                rentOption = rentOptionPart.body
+            )
+
+        }
     }
 
-    fun deleteProduct(id: Int) {
+    fun deleteProduct(id: String) {
         viewModelScope.launch {
             _deleteResult.value = ResultWrapper.Loading
             _deleteResult.value = deleteProductUseCase(id)
         }
-    }
-
-    fun showDeleteConfirmation(id: Int) {
-        // TODO: SHITAB will add delete confirmation dialog logic here
     }
 
     fun loadCategories() {
@@ -90,35 +111,6 @@ class ProductViewModel @Inject constructor(
 
     fun setCurrentStep(step: Int) {
         _currentStep.value = step
-    }
-
-//    fun setProductImageUri(uri: Uri) {
-//        productImageUri = uri
-//    }
-
-    fun validateTitle(): Boolean {
-        // TODO: SHITAB will add title validation logic here
-        return true
-    }
-
-    fun validateCategories(): Boolean {
-        // TODO: SHITAB will add categories validation logic here
-        return true
-    }
-
-    fun validateDescription(): Boolean {
-        // TODO: SHITAB will add description validation logic here
-        return true
-    }
-
-//    fun validateImage(): Boolean {
-        // TODO: SHITAB will add image validation logic here
-//        return productImageUri != null
-//    }
-
-    fun validatePrice(): Boolean {
-        // TODO: SHITAB will add price validation logic here
-        return true
     }
 
     suspend fun logout() {
@@ -193,4 +185,21 @@ class ProductViewModel @Inject constructor(
         return CreateProductJourneySingleton.clearAll()
     }
 
+    // Cached Entities
+    /*private var _cachedProduct: List<ProductEntity> = listOf()
+    val cachedProduct: List<ProductEntity> = _cachedProduct
+
+    suspend fun getCacheProducts(): List<ProductEntity> {
+        _cachedProduct = getCacheProductLocallyUseCase()
+        return _cachedProduct
+    }
+
+    suspend fun setCacheProduct(entity: ProductEntity) {
+        cacheProductLocallyUseCase.invoke(entity)
+    }
+
+    suspend fun clearCache() {
+        clearCacheProductUseCase()
+    }
+*/
 }

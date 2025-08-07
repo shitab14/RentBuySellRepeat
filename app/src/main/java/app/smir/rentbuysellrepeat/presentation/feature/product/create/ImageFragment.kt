@@ -132,7 +132,7 @@ class ImageFragment : Fragment() {
     ) { success: Boolean ->
         if (success) {
             currentPhotoUri?.let { uri ->
-                CreateProductJourneySingleton.addImageUri(uri)
+                viewModel.saveImages(listOf(uri))
                 setThumbnail(uri)
             }
         }
@@ -147,7 +147,7 @@ class ImageFragment : Fragment() {
     ) { uris: List<Uri> ->
         if (uris.isNotEmpty()) {
             // Add all selected URIs to the singleton
-            CreateProductJourneySingleton.addImageUris(uris)
+            viewModel.saveImages(uris)
             setThumbnail(uris.last())
         }
     }
