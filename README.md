@@ -66,8 +66,6 @@
 - Page Navigation to Registration Page
 - Save Login Data to DataStore
   
-[//]: # (![]&#40;snapshots/Screenshot_LoginScreen.png&#41;)
-
 <img src="snapshots/Screenshot_LoginScreen.png" width="50%" alt="Resized image">
 
  
@@ -77,7 +75,7 @@
 - Page Navigation to Login Page
 - Save Login Data to DataStore
 
-![](snapshots/Screenshot_RegisterScreen.png)
+<img src="snapshots/Screenshot_RegisterScreen.png" width="50%" alt="Resized image">
 
 ** MyProductList Page **
 - My Products API Call
@@ -87,7 +85,7 @@
 - Action Drawer Implementation
 - Log out Logic Implementation
 
-![](snapshots/Screenshot_MyProductsScreen.png)
+<img src="snapshots/Screenshot_MyProductsScreen.png" width="50%" alt="Resized image">
 
 ** Add Product Page ****
 - LoaderBar Implementation
@@ -100,14 +98,21 @@
 - Permission Handling
 - Multipart API Call (Setup done, unable to check)
 
-![](snapshots/Screenshot_CreateTitle.png)
-![](snapshots/Screenshot_CreateSelectCategories.png)
-![](snapshots/Screenshot_CreateDescription.png)
-![](snapshots/Screenshot_CreateProductPic.png)
-![](snapshots/Screenshot_CreatePicPermission.png)
-![](snapshots/Screenshot_CreatePicSelect.png)
-![](snapshots/Screenshot_CreatePurchaseRent.png)
-![](snapshots/Screenshot_CreateSummary.png)
+<img src="snapshots/Screenshot_CreateTitle.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreateSelectCategories.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreateDescription.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreateProductPic.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreatePicPermission.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreatePicSelect.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreatePurchaseRent.png" width="50%" alt="Resized image">
+
+<img src="snapshots/Screenshot_CreateSummary.png" width="50%" alt="Resized image">
 
 # App Recording
 [AppJourney.webm](https://drive.google.com/file/d/1pRF2SOXhUJGuTf_UqN9pL6fzEdQ0YDYA/view?usp=sharing)
