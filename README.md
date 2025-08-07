@@ -66,7 +66,10 @@
 - Page Navigation to Registration Page
 - Save Login Data to DataStore
   
-![](snapshots/Screenshot_LoginScreen.png)
+[//]: # (![]&#40;snapshots/Screenshot_LoginScreen.png&#41;)
+
+<img src="snapshots/Screenshot_LoginScreen.png" width="50%" alt="Resized image">
+
  
 ** Register Screen Logic **
 - All Field Input Validation
@@ -106,7 +109,12 @@
 ![](snapshots/Screenshot_CreatePurchaseRent.png)
 ![](snapshots/Screenshot_CreateSummary.png)
 
+# App Recording
 [AppJourney.webm](https://drive.google.com/file/d/1pRF2SOXhUJGuTf_UqN9pL6fzEdQ0YDYA/view?usp=sharing)
+
+** Used Devices **
+- Macbook Pro M1 (2020)
+- Android Studio Emulator: Pixel 3A API 34
 
 ** API Mocking **
 - Was unable to run Django Project
