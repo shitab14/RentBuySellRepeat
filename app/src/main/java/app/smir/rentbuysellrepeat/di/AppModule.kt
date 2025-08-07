@@ -77,7 +77,7 @@ object AppModule {
         single { AppDatabase.getDatabase(androidContext()) }
         single { get<AppDatabase>().authDao() }
 //        single { get<AppDatabase>().productDao() }
-    // TODO: SHITAB will add product DAO methods here
+        // TODO: ADD HERE -> add Dao classes after creating here
     }
 
     private val dataSourceModule = module {
@@ -85,11 +85,13 @@ object AppModule {
         single { AuthLocalDataSource(get(), get()) }
         single { ProductRemoteDataSource(get()) }
         single { ProductLocalDataSource(/*get()*/) }
+        // TODO: ADD HERE -> add remote & local dataSource classes after creating here
     }
 
     private val repositoryModule = module {
         single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
         single<ProductRepository> { ProductRepositoryImpl(get(), get()) }
+        // TODO: ADD HERE -> add Repository classes after creating here
     }
 
     private val useCaseModule = module {
@@ -108,6 +110,9 @@ object AppModule {
 //        single { GetCacheProductLocallyUseCase(repository = get()) }
 //        single { ClearCacheProductUseCase(repository = get()) }
         single { LogoutUseCase(repository = get()) }
+
+        // TODO: ADD HERE -> add UseCase classes after creating here
+
     }
 
     private val utilityModule = module {
@@ -140,7 +145,7 @@ object AppModule {
                 getCategoriesUseCase = get(),
                 logoutUseCase = get()
             ) }
-
+        // TODO: ADD HERE -> add ViewModel classes after creating here
     }
 
 

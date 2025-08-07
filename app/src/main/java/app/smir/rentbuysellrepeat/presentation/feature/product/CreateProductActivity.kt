@@ -2,7 +2,6 @@ package app.smir.rentbuysellrepeat.presentation.feature.product
 
 import android.content.Intent
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.viewpager2.widget.ViewPager2
@@ -228,7 +227,7 @@ class CreateProductActivity : BaseActivity<ActivityCreateProductBinding>(
 
     private fun navigateToMyProducts() {
         startActivity(Intent(this, MyProductsActivity::class.java))
-        finish()
+        finishAffinity()
     }
 
     override fun onDestroy() {

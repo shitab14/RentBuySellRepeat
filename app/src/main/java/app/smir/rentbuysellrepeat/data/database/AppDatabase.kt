@@ -12,7 +12,7 @@ import app.smir.rentbuysellrepeat.data.database.dao.AuthDao
 import app.smir.rentbuysellrepeat.data.database.entity.AuthEntity
 
 @Database(
- entities = [AuthEntity::class, /*ProductEntity::class*/], // TODO: SHITAB will add product DAO methods here
+ entities = [AuthEntity::class, /*ProductEntity::class*/], // TODO: ADD HERE -> add Entity classes after creating here
  version = 2,
  exportSchema = false
 )
